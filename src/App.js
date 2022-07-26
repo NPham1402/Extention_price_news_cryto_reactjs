@@ -1,24 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
-
+import "./App.css";
+import { Routes, Route, MemoryRouter } from "react-router-dom";
+import Allcoin from "./Page/Main";
+import Likecoin from "./Page/Detail";
+import { useCookies } from "react-cookie";
 function App() {
+  const [cookies, setCookie] = useCookies();
+  const set = () => {
+    if (cookies.id_coins === undefined) {
+      setCookie("id_coins", { data: [] });
+    }
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      {set()}
+      <MemoryRouter>
+        <Routes>
+          <Route path="/" element={<Allcoin />} />
+          <Route path="/detail" element={<Likecoin />} />
+        </Routes>
+      </MemoryRouter>
+    </>
   );
 }
 
